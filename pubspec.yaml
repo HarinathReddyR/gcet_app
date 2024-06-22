@@ -41,14 +41,28 @@ dependencies:
   equatable: ^2.0.5
   flutter_bloc: ^8.1.5
   meta: ^1.11.0
-  intl:
   google_fonts:
   #don't forget to set allowing http runtime fetching requst to false;
   date_picker_timeline:
   sqflite_common_ffi_web: ^0.4.3
   percent_indicator: ^4.2.3
   charts_flutter: ^0.12.0
+
   fl_chart: ^0.68.0
+  multiple_images_picker: ^1.0.1
+  image_picker: ^1.1.1
+  carousel_slider: ^4.2.1
+  cross_file_image: ^1.1.0
+  flutter_quill: 
+  io: ^1.0.4
+  html: ^0.15.4
+  universal_io: ^2.2.2
+  flutter_image_slideshow: ^0.1.6
+  flutter_cupertino_date_picker_fork: ^1.0.7
+  intl: 
+  url_launcher: ^6.2.6
+  readmore: ^3.0.0
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
@@ -111,5 +125,83 @@ flutter:
   #       - asset: assets/fonts/Montserrat-Bold.otf
   #         weight: 700
   #
+  fonts:
+    - family: Arimo
+      fonts:
+        - asset: lib/assets/fonts/Arimo-Regular.ttf
+          weight: 900
+        - asset: lib/assets/fonts/Arimo-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Arimo-SemiBold.ttf
+          weight: 600
+        - asset: lib/assets/fonts/Arimo-Medium.ttf
+          weight: 500
+        - asset: lib/assets/fonts/Arimo-Regular.ttf
+          weight: 400
+        # - asset: lib/assets/fonts/Arimo-MediumItlaic.ttf
+        #   weight: 300
+        # - asset: lib/assets/fonts/Arimo-Light.ttf
+        #   weight: 200
+    - family: OpenSans
+      fonts:
+        - asset: lib/assets/fonts/OpenSans-Regular.ttf
+          weight: 900
+        - asset: lib/assets/fonts/OpenSans-ExtraBold.ttf
+          weight: 800
+        - asset: lib/assets/fonts/OpenSans-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/OpenSans-SemiBold.ttf
+          weight: 600
+        - asset: lib/assets/fonts/OpenSans-Medium.ttf
+          weight: 500
+        - asset: lib/assets/fonts/OpenSans-Regular.ttf
+          weight: 400
+        - asset: lib/assets/fonts/OpenSans-Medium.ttf
+          weight: 300
+        - asset: lib/assets/fonts/OpenSans-Light.ttf
+          weight: 200
+    - family: EncodeSans
+      fonts:
+        - asset: lib/assets/fonts/EncodeSans-Black.ttf
+          weight: 900
+        - asset: lib/assets/fonts/EncodeSans-ExtraBold.ttf
+          weight: 800
+        - asset: lib/assets/fonts/EncodeSans-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/EncodeSans-SemiBold.ttf
+          weight: 600
+        - asset: lib/assets/fonts/EncodeSans-Medium.ttf
+          weight: 500
+        - asset: lib/assets/fonts/EncodeSans-Regular.ttf
+          weight: 400
+        - asset: lib/assets/fonts/EncodeSans-Thin.ttf
+          weight: 300
+        - asset: lib/assets/fonts/EncodeSans-Light.ttf
+          weight: 200
+        - asset: lib/assets/fonts/EncodeSans-ExtraLight.ttf
+          weight: 100
+    - family: Sabon
+      fonts: 
+        - asset: lib/assets/fonts/Sabon.ttf
+          weight: 900
+        - asset: lib/assets/fonts/SabonBold.ttf
+          weight: 800
+        - asset: lib/assets/fonts/SabonBoldItalic.ttf
+          weight: 700
+        - asset: lib/assets/fonts/SabonItalic.ttf
+          weight: 600
+    - family: Helvetica Now Display
+      fonts:
+        - asset: lib/assets/fonts/helveticanowtext-black-demo.ttf
+          weight: 900
+        - asset: lib/assets/fonts/helveticanowtext-blackitalic-demo.ttf
+          style: italic
+          weight: 800
+        - asset: lib/assets/fonts/helveticanowtext-bold-demo.ttf
+          weight: 700
+        - asset: lib/assets/fonts/helveticanowtext-bolditalic-demo.ttf
+          style: italic
+          weight: 600
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

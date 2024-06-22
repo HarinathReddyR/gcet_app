@@ -14,13 +14,29 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Splash Screen'),
+    return const MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(image: AssetImage('lib/assets/logo.png')),
+              SizedBox(height: 15),
+              Text(
+                'Geethanjali College of Engineering and Technology',
+                style: TextStyle(
+                  fontWeight:FontWeight.bold,
+                  color: Color.fromRGBO(0, 0, 128, 1),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+
 
 class SimpleBlocDelegate extends BlocObserver {
   @override
@@ -82,7 +98,7 @@ class App extends StatelessWidget {
           if (state is AuthenticationLoading) {
             return const LoadingIndicator();
           }
-          return SplashPage();
+          return const SplashPage();
         },
       ),
     );

@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:gcet_app/models/attendance_model.dart';
 import 'package:gcet_app/models/forgotpass.dart';
 import 'package:gcet_app/models/schedule_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:gcet_app/models/api_model.dart';
+import 'package:image_picker/image_picker.dart';
 
 const _base = "https://home-hub-app.herokuapp.com";
 const _tokenURL = _base + _tokenEndpoint;
@@ -33,6 +35,49 @@ Future<Token> getToken(UserLogin userLogin) async {
     throw Exception(json.decode(response.body));
   }
 }
+
+Future<void> postEvent(
+    String title, String description, String date, String venue, List<XFile> imageFileList) async {
+  var request = http.MultipartRequest(
+    'POST',
+    Uri.parse("http://localhost:3000/api/events"),
+  );
+
+  request.fields['title'] = title;
+  request.fields['description'] = description;
+  request.fields['date'] = date;
+  request.fields['venue'] = venue;
+
+  for (int i = 0; i < imageFileList.length; i++) {
+    // For web
+    if (kIsWeb) {
+      Uint8List bytes = await imageFileList[i].readAsBytes();
+      request.files.add(http.MultipartFile.fromBytes(
+        'images',
+        bytes,
+        filename: imageFileList[i].name,
+      ));
+    } else {
+      request.files.add(await http.MultipartFile.fromPath(
+        'images',
+        imageFileList[i].path,
+        filename: imageFileList[i].name,
+      ));
+    }
+  }
+
+  try {
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      print('Event posted successfully');
+    } else {
+      print('Failed to post event: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error posting event: $e');
+  }
+}
+
 
 Future<List<AttendanceModel>> getAttendance(String user) async {
   // print(_tokenURL);
