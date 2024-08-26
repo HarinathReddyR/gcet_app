@@ -11,7 +11,8 @@ class AttendanceLoadingState extends AttendanceState {}
 
 class AttendanceLoadedState extends AttendanceState {
   final List<AttendanceModel> atten;
-  const AttendanceLoadedState(this.atten);
+  final TotalAttendance totalAttendance;
+  const AttendanceLoadedState(this.atten, this.totalAttendance);
   List<Object?> get props => [atten];
 }
 

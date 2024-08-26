@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gcet_app/pages/semester/subject/notes.dart';
+import 'package:gcet_app/pages/semester/subject/subTextbooks.dart';
 import 'package:gcet_app/pages/semester/subject/subinfo_page.dart';
 
 class SubjectPage extends StatefulWidget {
@@ -45,7 +47,7 @@ class _SubjectPageState extends State<SubjectPage> {
               () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SubjectInfoPage()),
+                  MaterialPageRoute(builder: (context) => Notes()),
                 );
               },
             ),
@@ -55,7 +57,7 @@ class _SubjectPageState extends State<SubjectPage> {
               () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SubjectInfoPage()),
+                  MaterialPageRoute(builder: (context) => TextBooks()),
                 );
               },
             ),

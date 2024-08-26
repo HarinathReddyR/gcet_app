@@ -9,6 +9,8 @@ import 'package:gcet_app/pages/postevents/events_page.dart';
 import 'package:gcet_app/pages/postevents/formgenerator.dart';
 import 'package:gcet_app/pages/postevents/postevents_page.dart';
 import 'package:gcet_app/pages/postevents/userevents_page.dart';
+import 'package:gcet_app/pages/digitalLibrary/digitalLibrary_page.dart';
+import 'package:gcet_app/pages/markattendance/markattendanceselect.dart';
 import 'package:gcet_app/pages/profile/profile_page.dart';
 import 'package:gcet_app/pages/schedule/schedule_page.dart';
 import 'package:gcet_app/pages/notice/notice_page.dart';
@@ -89,7 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     ListTile(
                       leading: Icon(Icons.home, color: Colors.white),
-                      title: Text("Home", style: TextStyle(color: Colors.white)),
+                      title:
+                          Text("Home", style: TextStyle(color: Colors.white)),
                       onTap: () {
                         setState(() {
                           _currentIndex = 0;
@@ -99,7 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ListTile(
                       leading: Icon(Icons.post_add, color: Colors.white),
-                      title: Text("Blogs", style: TextStyle(color: Colors.white)),
+                      title:
+                          Text("Blogs", style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
@@ -110,7 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ListTile(
                       leading: Icon(Icons.schedule, color: Colors.white),
-                      title: Text("Schedule", style: TextStyle(color: Colors.white)),
+                      title: Text("Schedule",
+                          style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
@@ -123,8 +128,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.check_circle_outline, color: Colors.white),
-                      title: Text("Attendance", style: TextStyle(color: Colors.white)),
+                      leading:
+                          Icon(Icons.check_circle_outline, color: Colors.white),
+                      title: Text("Attendance",
+                          style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
@@ -136,7 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ListTile(
                       leading: Icon(Icons.event, color: Colors.white),
-                      title: Text("Post Events", style: TextStyle(color: Colors.white)),
+                      title: Text("Post Events",
+                          style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
@@ -147,30 +155,56 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                     ListTile(
+                      title: const Text("digitalLib"),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DigitalLibraryPage()),
+                        );
+                      },
+                    ),
+                    ListTile(
                       leading: Icon(Icons.event_note, color: Colors.white),
-                      title: Text("Events", style: TextStyle(color: Colors.white)),
+                      title:
+                          Text("Events", style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => EventsPage(otherPage: true)),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  EventsPage(otherPage: true)),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      title: const Text("mark atten"),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MarkAttendanceSelectPage()),
                         );
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.event_available, color: Colors.white),
-                      title: Text("My Events", style: TextStyle(color: Colors.white)),
+                      title: Text("My Events",
+                          style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MyEventsPage()),
+                          MaterialPageRoute(
+                              builder: (context) => MyEventsPage()),
                         );
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.assignment, color: Colors.white),
-                      title: Text("Generate Form", style: TextStyle(color: Colors.white)),
+                      title: Text("Generate Form",
+                          style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
@@ -186,7 +220,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ListTile(
                       leading: Icon(Icons.logout, color: Colors.white),
-                      title: Text("Logout", style: TextStyle(color: Colors.white)),
+                      title:
+                          Text("Logout", style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         _logout();

@@ -70,10 +70,10 @@ class PostEventsPageState extends State<PostEventsPage> {
           newSelectedTime.hour,
           newSelectedTime.minute,
         );
- 
+
         setState(() {
           dateController.text =
-              '${DateFormat.yMMMd().format(_selectedDateTime)} @ ${DateFormat.jm().format(_selectedDateTime)}';
+              '${DateFormat.yMMMd().format(_selectedDateTime)}';
           dateController.selection = TextSelection.fromPosition(
             TextPosition(
               offset: dateController.text.length,
