@@ -1,40 +1,34 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gcet_app/db/user_dao.dart';
-import 'package:gcet_app/pages/postevents/eventform_page.dart';
+import 'package:gcet_app/pages/postevents/regusers_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:readmore/readmore.dart';
 
-class EventsPage extends StatefulWidget {
-  final bool otherPage;
-  const EventsPage({
+class MyEventsPage extends StatefulWidget {
+  const MyEventsPage({
     Key? key,
-    required bool this.otherPage,
   }) : super(key: key);
 
   @override
-  State<EventsPage> createState() => _EventsPage();
+  State<MyEventsPage> createState() => _MyEventsPage();
 }
 
-class _EventsPage extends State<EventsPage> {
+class _MyEventsPage extends State<MyEventsPage> {
   List<dynamic> events = [];
   late String user;
-  AppBar? appBar;
+
   @override
   void initState() {
     super.initState();
     _fetchEvents();
-    appBar = (widget.otherPage)
-      ? AppBar(
-          title: Text('Events'),
-        )
-      : null;
   }
 
   Future<void> _fetchEvents() async {
     String token = await UserDao().getPersistToken(0);
+    String user = await UserDao().getUser(0);
     final response = await http.get(
-      Uri.parse('http://localhost:3000/api/events/display'),
+      Uri.parse('http://localhost:3000/api/events/display/$user'),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -43,10 +37,10 @@ class _EventsPage extends State<EventsPage> {
       setState(() {
         events = json.decode(response.body);
       });
-      print(events);
     } else {
       // Handle error
       print('Failed to load events');
+      Navigator.pop(context);
     }
   }
 
@@ -88,7 +82,9 @@ class _EventsPage extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
+      appBar: AppBar(
+        title: Text('Events'),
+      ),
       body: ListView.builder(
         itemCount: events.length,
         itemBuilder: (context, index) {
@@ -154,23 +150,20 @@ class _EventsPage extends State<EventsPage> {
                         ? Align(
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
-                              onPressed: (event['isReg'] == 1)
-                                  ? null
-                                  : () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => EventFormPage(
-                                                  eventId: event['id'],
-                                                  title: event['title'],
-                                                )),
-                                      );
-                                    },
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EventRegUsers(
+                                            eventId: event['id'],
+                                          )),
+                                );
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Color.fromRGBO(78, 24, 217, 1),
                               ),
-                              child: const Text(
-                                'Register',
+                              child: Text(
+                                'Registered Users: ${event['registrations']}',
                                 style: TextStyle(
                                     color: Color.fromRGBO(255, 255, 255, 1)),
                               ),

@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gcet_app/pages/login/bloc/login_bloc.dart';
 import 'dart:math' as math;
 
-import 'package:google_fonts/google_fonts.dart';
 
 Widget inputField(String s, IconData ic, TextEditingController controller) {
   bool b = false;

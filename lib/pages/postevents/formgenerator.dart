@@ -2,33 +2,40 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gcet_app/db/user_dao.dart';
+import 'package:gcet_app/models/customform_ques.dart';
 import 'package:gcet_app/pages/postevents/custom_form_display.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class Question {
-  TextEditingController questionController;
-  String selectedFieldType;
-  List<TextEditingController> fieldControllers;
+// class Question {
+//   TextEditingController questionController;
+//   String selectedFieldType;
+//   List<TextEditingController> fieldControllers;
 
-  Question({
-    required this.questionController,
-    required this.selectedFieldType,
-    required this.fieldControllers,
-  });
+//   Question({
+//     required this.questionController,
+//     required this.selectedFieldType,
+//     required this.fieldControllers,
+//   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'question': questionController.text,
-      'type': selectedFieldType,
-      'options':
-          fieldControllers.map((controller) => controller.text).join(','),
-    };
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     return {
+//       'question': questionController.text,
+//       'type': selectedFieldType,
+//       'options':
+//           fieldControllers.map((controller) => controller.text).join(','),
+//     };
+//   }
+// }
 
 class CustomFormPage extends StatefulWidget {
-  const CustomFormPage({Key? key}) : super(key: key);
+  final List<Question> questions;
+  final String title, desc;
+  const CustomFormPage({
+    Key? key,
+    required this.title,
+    required this.desc,
+    required this.questions,
+  }) : super(key: key);
 
   @override
   State<CustomFormPage> createState() => CustomFormPageState();
@@ -37,26 +44,26 @@ class CustomFormPage extends StatefulWidget {
 class CustomFormPageState extends State<CustomFormPage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descrController = TextEditingController();
-  List<Question> questions = [];
+  late List<Question> questions;
   List<String> formFields = <String>['Radio', 'Dropdown', 'Text', 'Checkbox'];
 
   @override
-  void initState() {
+  void initState()  {
     super.initState();
-    addNewQuestion();
+    titleController.text = widget.title;
+    descrController.text = widget.desc;
+    questions = widget.questions;
   }
 
-  @override
-  void dispose() {
-    titleController.dispose();
-    descrController.dispose();
-    for (var question in questions) {
-      question.questionController.dispose();
-      for (var controller in question.fieldControllers) {
-        controller.dispose();
-      }
-    }
-    super.dispose();
+  void submitForm() {
+    // List<Map<String, dynamic>> questionsJson =
+    //     questions.map((q) => q.toJson()).toList();
+    // Map<String, dynamic> formData = {
+    //   'title': titleController.text,
+    //   'descr': descrController.text,
+    //   'ques': questions,
+    // };
+    Navigator.pop(context, questions);
   }
 
   void addNewQuestion() {
@@ -65,7 +72,7 @@ class CustomFormPageState extends State<CustomFormPage> {
         Question(
           questionController: TextEditingController(),
           selectedFieldType: formFields[0],
-          fieldControllers: [],
+          fieldControllers: [TextEditingController()],
         ),
       );
     });
@@ -94,35 +101,6 @@ class CustomFormPageState extends State<CustomFormPage> {
     });
   }
 
-  Future<void> submitForm() async {
-    List<Map<String, dynamic>> questionsJson =
-        questions.map((question) => question.toJson()).toList();
-
-    Map<String, dynamic> formData = {
-      'title': titleController.text,
-      'descr': descrController.text,
-      'ques': questionsJson,
-    };
-    // print(formData);
-    final response = await http.post(
-      Uri.parse('http://localhost:3000/api/custom-form/submit'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(formData),
-    );
-
-    if (response.statusCode == 200) {
-      // Handle successful response
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form submitted successfully!')),
-      );
-    } else {
-      // Handle error response
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to submit form!')),
-      );
-    }
-  }
-
   Widget deleteOption(Question question, int index) {
     return IconButton(
       icon: Icon(Icons.clear),
@@ -136,8 +114,10 @@ class CustomFormPageState extends State<CustomFormPage> {
       onPressed: () => removeQuestion(index),
     );
   }
+
   void previewForm() {
-    List<Map<String, dynamic>> questionsJson = questions.map((question) => question.toJson()).toList();
+    List<Map<String, dynamic>> questionsJson =
+        questions.map((question) => question.toJson()).toList();
 
     Map<String, dynamic> formData = {
       'title': titleController.text,
@@ -152,6 +132,7 @@ class CustomFormPageState extends State<CustomFormPage> {
       ),
     );
   }
+
   Widget buildFieldOptions(Question question) {
     if (question.selectedFieldType == 'Radio') {
       return Column(
@@ -453,7 +434,6 @@ class CustomFormPageState extends State<CustomFormPage> {
                       style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
                     ),
                   ),
-                  
                 ],
               ),
             ),

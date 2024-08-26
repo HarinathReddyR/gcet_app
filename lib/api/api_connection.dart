@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:gcet_app/db/user_dao.dart';
 import 'package:gcet_app/models/attendance_model.dart';
+import 'package:gcet_app/models/customform_ques.dart';
 import 'package:gcet_app/models/forgotpass.dart';
 import 'package:gcet_app/models/schedule_model.dart';
 import 'package:http/http.dart' as http;
@@ -37,16 +39,25 @@ Future<Token> getToken(UserLogin userLogin) async {
 }
 
 Future<void> postEvent(
-    String title, String description, String date, String venue, List<XFile> imageFileList) async {
+    String title,
+    String description,
+    String date,
+    String venue,
+    List<XFile> imageFileList,
+    bool reg,
+    List<Question> ques) async {
+  String token = await UserDao().getPersistToken(0);
   var request = http.MultipartRequest(
     'POST',
     Uri.parse("http://localhost:3000/api/events"),
   );
-
   request.fields['title'] = title;
   request.fields['description'] = description;
   request.fields['date'] = date;
   request.fields['venue'] = venue;
+  request.fields['reg'] = (reg) ? jsonEncode(1) : jsonEncode(0);
+  request.fields['ques'] = jsonEncode(ques);
+  request.headers['Authorization'] = 'Bearer $token';
 
   for (int i = 0; i < imageFileList.length; i++) {
     // For web
@@ -77,7 +88,6 @@ Future<void> postEvent(
     print('Error posting event: $e');
   }
 }
-
 
 Future<List<AttendanceModel>> getAttendance(String user) async {
   // print(_tokenURL);

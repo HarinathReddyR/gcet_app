@@ -21,3 +21,12 @@ class PostEventsFailure extends PostEventsState {
   @override
   List<Object> get props => [error];
 }
+
+class FormSavedState extends PostEventsState {
+  final List<Question> questions;
+
+  const FormSavedState({required this.questions});
+
+  @override
+  List<Object> get props => [questions];
+}
