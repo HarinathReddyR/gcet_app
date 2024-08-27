@@ -86,9 +86,7 @@ class NoticeBox extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15),
                 Column(
                   children: [
                     Row(
@@ -107,7 +105,7 @@ class NoticeBox extends StatelessWidget {
                     if (img.isNotEmpty)
                       GestureDetector(
                         onTap: () => _showFullScreenImage(context, img),
-                        child: Image.network(img),
+                        child: Image.asset(img),
                       ),
                     Column(
                       children: [

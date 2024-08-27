@@ -118,7 +118,7 @@ class _NoticeFormState extends State<NoticeForm> {
                                 BoxShadow(
                                     color: Colors.grey,
                                     blurRadius: 5,
-                                    spreadRadius: 3)
+                                    spreadRadius: 3),
                               ]),
                           padding: EdgeInsets.all(16),
                           child: TextField(

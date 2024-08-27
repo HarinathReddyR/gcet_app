@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
 
-const appBackgroundColor = Color(0XFFD2FFF4);
+// Color(0XFFD2FFF4) previous color
+const appBackgroundColor = Colors.white;
 
 class Themes {
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
-    primaryColor: Colors.white10,
+    primaryColor: Colors.white,
     scaffoldBackgroundColor: appBackgroundColor,
     bottomAppBarTheme: BottomAppBarTheme(color: Colors.black),
     colorScheme:
@@ -26,4 +27,37 @@ TextStyle get SubHeadingStyle {
 TextStyle get HeadingStyle {
   return GoogleFonts.lato(
       textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold));
+}
+
+Widget heading(String title) {
+  return Text(
+    title,
+    style: TextStyle(
+      fontSize: 30,
+      fontWeight: FontWeight.w900,
+      color: Colors.black,
+    ),
+  );
+}
+
+Widget subheading(String title) {
+  return Text(
+    title,
+    style: TextStyle(
+      fontSize: 25,
+      fontWeight: FontWeight.w700,
+      color: Colors.black.withOpacity(0.9),
+    ),
+  );
+}
+
+Widget Description(String title) {
+  return Text(
+    title,
+    style: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w300,
+      color: Colors.grey[800],
+    ),
+  );
 }

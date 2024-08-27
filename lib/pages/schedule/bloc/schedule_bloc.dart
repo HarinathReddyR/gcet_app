@@ -13,7 +13,7 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
         emit(ScheduleLoading());
         try {
           final List<ScheduleModel> schedule =
-              await getSchedule(rollNo, event.selectedDate);
+              await getSchedule(rollNo, event.selectedDate, 'CSE', '3', 'D');
           if (schedule.isEmpty) {
             emit(ScheduleEmpty());
           } else

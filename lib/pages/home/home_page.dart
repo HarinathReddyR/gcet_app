@@ -10,6 +10,8 @@ import 'package:gcet_app/pages/postevents/events_page.dart';
 import 'package:gcet_app/pages/postevents/formgenerator.dart';
 import 'package:gcet_app/pages/postevents/postevents_page.dart';
 import 'package:gcet_app/pages/postevents/userevents_page.dart';
+import 'package:gcet_app/pages/digitalLibrary/digitalLibrary_page.dart';
+import 'package:gcet_app/pages/markattendance/markattendanceselect.dart';
 import 'package:gcet_app/pages/profile/profile_page.dart';
 import 'package:gcet_app/pages/schedule/faculty_schedule_page.dart';
 import 'package:gcet_app/pages/schedule/schedule_page.dart';
@@ -197,6 +199,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                     ListTile(
+                      title: const Text("digitalLib"),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DigitalLibraryPage()),
+                        );
+                      },
+                    ),
+                    ListTile(
                       leading: Icon(Icons.event_note, color: Colors.white),
                       title:
                           Text("Events", style: TextStyle(color: Colors.white)),
@@ -207,6 +219,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   EventsPage(otherPage: true)),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      title: const Text("mark atten"),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MarkAttendanceSelectPage()),
                         );
                       },
                     ),

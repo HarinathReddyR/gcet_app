@@ -1,21 +1,52 @@
+import 'package:meta/meta.dart';
+
 class AttendanceModel {
-  String? subject;
-  int? attended;
-  int? total;
+  String subject;
+  int attended;
+  int total;
+  double percentage;
 
-  AttendanceModel({this.subject, this.attended, this.total});
+  AttendanceModel({
+    required this.subject,
+    required this.attended,
+    required this.total,
+  }) : percentage = (attended / total) * 100;
 
-  AttendanceModel.fromJson(Map<String, dynamic> json) {
-    subject = json['subject'];
-    attended = json['attended'];
+  // Factory constructor for creating a new instance from a map
+  factory AttendanceModel.fromJson(Map<String, dynamic> json) {
+    return AttendanceModel(
+      subject: json['subject'],
+      attended: json['attended'],
+      total: json['total'],
+    );
+  }
+
+  // Method for converting instance data to a map
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['subject'] = subject;
+    data['attended'] = attended;
+    data['total'] = total;
+    data['percentage'] = percentage;
+    return data;
+  }
+}
+
+class TotalAttendance {
+  late int total;
+  late int attended;
+
+  TotalAttendance({required this.total, required this.attended});
+
+  TotalAttendance.fromJson(Map<String, dynamic> json) {
     total = json['total'];
+    attended = json['attended'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['subject'] = this.subject;
-    data['attended'] = this.attended;
     data['total'] = this.total;
+    data['attended'] = this.attended;
     return data;
   }
 }

@@ -14,7 +14,9 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
         try {
           final List<AttendanceModel> attendance =
               await getAttendance("21R11A05K0");
-          emit(AttendanceLoadedState(attendance));
+          final TotalAttendance overallData =
+              await getOverallAttendance(event.username);
+          emit(AttendanceLoadedState(attendance, overallData));
         } catch (e) {
           emit(AttendanceErrorState(error: e.toString()));
         }
