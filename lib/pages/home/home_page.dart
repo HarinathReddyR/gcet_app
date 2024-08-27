@@ -4,12 +4,14 @@ import 'package:gcet_app/bloc/auth_bloc.dart';
 import 'package:gcet_app/db/user_dao.dart';
 import 'package:gcet_app/pages/attendance/attendance_page.dart';
 import 'package:gcet_app/pages/blog_page.dart';
+import 'package:gcet_app/pages/home/facultyhome_page.dart';
 import 'package:gcet_app/pages/home/homestate_page.dart';
 import 'package:gcet_app/pages/postevents/events_page.dart';
 import 'package:gcet_app/pages/postevents/formgenerator.dart';
 import 'package:gcet_app/pages/postevents/postevents_page.dart';
 import 'package:gcet_app/pages/postevents/userevents_page.dart';
 import 'package:gcet_app/pages/profile/profile_page.dart';
+import 'package:gcet_app/pages/schedule/faculty_schedule_page.dart';
 import 'package:gcet_app/pages/schedule/schedule_page.dart';
 import 'package:gcet_app/pages/notice/notice_page.dart';
 import 'package:gcet_app/pages/semester/sem_page.dart';
@@ -28,17 +30,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Color drawColor = Color.fromRGBO(134, 104, 210, 1);
   int _currentIndex = 0;
   String? user;
-
+  String? role;
+  List<Widget> _pages = []; // Initialize as an empty list
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final List<Widget> _pages = [
-    HomePage(),
-    SemPage(),
-    NoticePage(),
-    ProfilePage(
-      rollNo: '21r11a05k0',
-    ),
-  ];
 
   @override
   void initState() {
@@ -48,9 +42,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _fetchUser() async {
     String fetchedUser = await UserDao().getUser(0);
+    String fetchRole = await UserDao().getPersistToken(0);
+
     setState(() {
       user = fetchedUser;
+      role = fetchRole.split('@')[1];
+      _buildPages(); // Build the pages after role is fetched
     });
+  }
+
+  void _buildPages() {
+    _pages = [
+      role != "faculty" ? HomePage() : FacultyHomePage(),
+      SemPage(),
+      NoticePage(),
+      ProfilePage(rollNo: '21r11a05k0'),
+    ];
   }
 
   _logout() {
@@ -59,6 +66,43 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    dynamic commonRoutes = [
+      ListTile(
+        leading: Icon(Icons.home, color: Colors.white),
+        title: Text("Home", style: TextStyle(color: Colors.white)),
+        onTap: () {
+          setState(() {
+            _currentIndex = 0;
+          });
+          Navigator.pop(context); // Close the drawer
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.post_add, color: Colors.white),
+        title: Text("Blogs", style: TextStyle(color: Colors.white)),
+        onTap: () {
+          Navigator.pop(context); // Close the drawer
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => BlogPage()),
+          );
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.schedule, color: Colors.white),
+        title: Text("Schedule", style: TextStyle(color: Colors.white)),
+        onTap: () {
+          Navigator.pop(context); // Close the drawer
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const SchedulePage(
+                      rollNo: '21r1a05k0',
+                    )),
+          );
+        },
+      ),
+    ];
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
@@ -89,7 +133,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     ListTile(
                       leading: Icon(Icons.home, color: Colors.white),
-                      title: Text("Home", style: TextStyle(color: Colors.white)),
+                      title:
+                          Text("Home", style: TextStyle(color: Colors.white)),
                       onTap: () {
                         setState(() {
                           _currentIndex = 0;
@@ -99,7 +144,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ListTile(
                       leading: Icon(Icons.post_add, color: Colors.white),
-                      title: Text("Blogs", style: TextStyle(color: Colors.white)),
+                      title:
+                          Text("Blogs", style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
@@ -110,21 +156,24 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ListTile(
                       leading: Icon(Icons.schedule, color: Colors.white),
-                      title: Text("Schedule", style: TextStyle(color: Colors.white)),
+                      title: Text("Schedule",
+                          style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SchedulePage(
-                                    rollNo: '21r1a05k0',
+                              builder: (context) => const FacultySchedulePage(
+                                    // rollNo: '21r1a05k0',
                                   )),
                         );
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.check_circle_outline, color: Colors.white),
-                      title: Text("Attendance", style: TextStyle(color: Colors.white)),
+                      leading:
+                          Icon(Icons.check_circle_outline, color: Colors.white),
+                      title: Text("Attendance",
+                          style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
@@ -136,7 +185,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ListTile(
                       leading: Icon(Icons.event, color: Colors.white),
-                      title: Text("Post Events", style: TextStyle(color: Colors.white)),
+                      title: Text("Post Events",
+                          style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
@@ -148,29 +198,35 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ListTile(
                       leading: Icon(Icons.event_note, color: Colors.white),
-                      title: Text("Events", style: TextStyle(color: Colors.white)),
+                      title:
+                          Text("Events", style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => EventsPage(otherPage: true)),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  EventsPage(otherPage: true)),
                         );
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.event_available, color: Colors.white),
-                      title: Text("My Events", style: TextStyle(color: Colors.white)),
+                      title: Text("My Events",
+                          style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MyEventsPage()),
+                          MaterialPageRoute(
+                              builder: (context) => MyEventsPage()),
                         );
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.assignment, color: Colors.white),
-                      title: Text("Generate Form", style: TextStyle(color: Colors.white)),
+                      title: Text("Generate Form",
+                          style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         Navigator.push(
@@ -186,7 +242,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ListTile(
                       leading: Icon(Icons.logout, color: Colors.white),
-                      title: Text("Logout", style: TextStyle(color: Colors.white)),
+                      title:
+                          Text("Logout", style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                         _logout();
@@ -217,7 +274,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Expanded(
-            child: _pages[_currentIndex],
+            child: _pages.isNotEmpty
+                ? _pages[_currentIndex]
+                : Center(
+                    child:
+                        CircularProgressIndicator()), // Show loading indicator until pages are ready
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),

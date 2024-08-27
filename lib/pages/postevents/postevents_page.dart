@@ -70,7 +70,7 @@ class PostEventsPageState extends State<PostEventsPage> {
           newSelectedTime.hour,
           newSelectedTime.minute,
         );
- 
+
         setState(() {
           dateController.text =
               '${DateFormat.yMMMd().format(_selectedDateTime)} @ ${DateFormat.jm().format(_selectedDateTime)}';
@@ -180,17 +180,46 @@ class PostEventsPageState extends State<PostEventsPage> {
       height: 200,
       child: imageFileList == null || imageFileList!.isEmpty
           ? Container()
-          : ImageSlideshow(
-              width: double.infinity,
-              height: 200,
-              initialPage: 0,
-              indicatorColor: Colors.blue,
-              indicatorBackgroundColor: Colors.grey,
-              children: imageFileList!.map((img) {
-                return Image.network(img.path);
-              }).toList(),
-              onPageChanged: (value) {
-                print('Page changed: $value');
+          : ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: imageFileList!.length,
+              itemBuilder: (context, index) {
+                return Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 5),
+                      child: Image.network(
+                        imageFileList![index].path,
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: 200,
+                      ),
+                    ),
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            imageFileList!.removeAt(index);
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            shape: BoxShape.circle,
+                          ),
+                          padding: EdgeInsets.all(4),
+                          child: Icon(
+                            Icons.close,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
               },
             ),
     );

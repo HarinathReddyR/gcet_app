@@ -319,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     SizedBox(height: 20,),
                     SizedBox(
-                      height: 300, // Adjust the height as per your needs
+                      height: MediaQuery.of(context).size.height * 0.7, // Adjust the height as per your needs
                       child: TabBarView(
                         children: [
                           Center(child: Text("Time Table View")),
